@@ -7,8 +7,8 @@ CodeSourcery gnu toolchain, and the STM32F10x Standard Peripheral Library.
 To test:
 
    (1) install the toolchain and libarary.
-   (3) open project up in VScode
-   (4) build project using platfomio and VScode, the platformio.ini file is already setup
+   (2) open project up in VScode
+   (3) build project using platfomio and VScode, the platformio.ini file is already setup
 
 To create new projects
 
