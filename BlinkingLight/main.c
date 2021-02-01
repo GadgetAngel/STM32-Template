@@ -1,5 +1,11 @@
 #include <stm32f10x.h>
 
+//global variables
+//for testing purposes
+int n = 0;
+int inc_const = 3;
+int button;
+
 void delay(void) {
   int i = 100000; /* About 1/4 second delay */
 
@@ -7,9 +13,13 @@ void delay(void) {
     asm("nop");
 }
 
+void inc(void){
+  n += inc_const;
+}
+
 int main(void) {
-  int n = 0;
-  int button;
+  //int n = 0;
+  ;int button;
 
   /* Enable the GPIOA (bit 2) and GPIOC (bit 4) */
   /* See 6.3.7 in stm32f100x reference manual */
@@ -28,7 +38,8 @@ int main(void) {
 
     // Read the button - the button pulls down PA0 to logic 0
     button = ((GPIOA ->IDR & 0x1) == 0);
-    n++;
+    //n++;
+    inc();
 
     /* see 7.2.5 in stm32f100x reference manual */
     if (n & 1) {
