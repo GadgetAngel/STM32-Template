@@ -6,9 +6,9 @@ using the arm embedded gnu toolchain, and the STM32F10x Standard Peripheral Libr
 
 Do not use the "book.pdf"'s method of installing the GNU Arm Embedded Toolchain, instead use these instructions:
 
-For Windows 10: use the Windows 10 installer (gcc-arm-none-eabi-10-2020-q4-major-win32.exe, select default but placd a check mark next to update system path variables) : https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads
+**For Windows 10**: use the Windows 10 installer (gcc-arm-none-eabi-10-2020-q4-major-win32.exe, select default but placd a check mark next to update system path variables) : https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads
 
-For Linux for the instructions given in the answer: https://askubuntu.com/questions/1243252/how-to-install-arm-none-eabi-gdb-on-ubuntu-20-04-lts-focal-fossa
+**For Linux** for the instructions given in the answer: https://askubuntu.com/questions/1243252/how-to-install-arm-none-eabi-gdb-on-ubuntu-20-04-lts-focal-fossa
 
 The STM32VLDISCOVERY board can be purchased for ~$25.00 on amazon.com: https://www.amazon.com/MICROELECTRONICS-STM32VLDISCOVERY-Quick-Evaluation-Debugger/dp/B073RQXB6L or
 https://www.st.com/en/evaluation-tools/stm32vldiscovery.html#sample-buy from other distributors for around ~$20.00
@@ -19,8 +19,8 @@ The STM32VLDISCOVERY board has an STM32F100RBT6B MCU, here is it's datasheet : h
 Please obtain the STM32F10x Standard Peripheral Libray from: https://www.st.com/en/embedded-software/stsw-stm32054.html
 
 Download the STM32F10x Standard Peripheral Library and place it on you computer system. I placed mine in
-"/home/joann/Arm/STM32F10x_StdPeriph_Lib_V3.5.0" on LINUX and
-"C:\Users\joann\download_sw\STM32F10x_StdPeriph_Lib_V3.5.0" on Windows 10
+"/home/joann/Arm/STM32F10x_StdPeriph_Lib_V3.5.0" on **LINUX** and
+"C:\Users\joann\download_sw\STM32F10x_StdPeriph_Lib_V3.5.0" on **Windows 10**
 
 Download the STM32F10x Standard Peripheral Library and place it on you computer system. Now, (by hand)
 **Adjust the path in the platformio.ini file to match where you placed the "STM32F10x Standard Peripheral Libray" on your
@@ -43,29 +43,29 @@ Before you can run a gdb session on the STM32VLDISCOVERY board do the following:
 Because the STM32VL discovery board has a built in st-link-v1 we can use it to flash our compiled firmware.elf file to the MCU for
 testing and debugging.
 
-To flash the firmware.bin file to the STM32VLdiscovery board LINUX and WINDOW users will use the stlink (v1.6.0) utility from github.com:
+To flash the firmware.bin file to the STM32VLdiscovery board **LINUX and WINDOW users** will use the stlink (v1.6.0) utility from github.com:
 We need to instal the stlink (v1.6.0) on your computers system. Download the stlink project v1.6.0 (do not use the latestest version 1.6.1 because this version will not work with STM32VL discovery board) from github.com: https://github.com/stlink-org/stlink/releases/tag/v1.6.0.  Follow the stlink v1.6.0 instructions for installing or compiling the project for your a LINUX system: https://github.com/stlink-org/stlink/blob/v1.6.0/doc/compiling.md
 
-For Windows users: To flash the firmware.bin file to the STM32VLdiscovery board WINDOWS users can also use the ST-LINK utility and st-link_cli utility from STelectronics:We need to install the latest ST-LINK utility from STelectrons on to your computer system.  Download the ST-LINK utility (it include the st-link_cli utility too) from: https://www.st.com/en/development-tools/stsw-link004.html#GetSoftware. Run the windows installer. st-link_cli can only be run from the cmd prompt.
+For **Windows** users: To flash the firmware.bin file to the STM32VLdiscovery board WINDOWS users can also use the ST-LINK utility and st-link_cli utility from STelectronics:We need to install the latest ST-LINK utility from STelectrons on to your computer system.  Download the ST-LINK utility (it include the st-link_cli utility too) from: https://www.st.com/en/development-tools/stsw-link004.html#GetSoftware. Run the windows installer. st-link_cli can only be run from the cmd prompt.
 The command for st-link_cli is: $> st-link_cli -c ID=0 SWD -P "C:\path-to-compiled-firmware\Demo_Build\disco_f100rb\firmware.bin" 0x08000000
 
-FOR WINDOW USERS ONLY: by default the USB driver for the st-link devices must be registerd with ziag tool for st-link to work under windows.  If you do not register
+FOR **WINDOWs** USERS ONLY: by default the USB driver for the st-link devices must be registerd with ziag tool for st-link to work under windows.  If you do not register
 the usb driver via Ziag tool you will see the followiing error:
 ```
 Error: libusb_open() failed with LIBUSB_ERROR_NOT_SUPPORTED
 Error: open failed
 ```
-FOR WINDOW USERE ONLY: to prevent the above libusb_open() error from occuring, download the Ziag tool. There is no installation, you run the ziag tool by double-click on the zadig-2.5.exe file. Download the Zadiag tool from here: https://zadig.akeo.ie/. Plug in your STM32VLdiscovery board to your Windows 10 computer. Now double-click on the Zadiag.2.5.exe file. Select yes, Select Options menu, select List all devices. You should see STM32 STLink in the list. Select it. Now you want your system to use the WinUSB driver instead of the driver you are currently using. Select Install Drier. When the WinUSB driver is installed you will see a box that says it was sucessfull. Exit the Zadig tool.
+FOR **WINDOWs** USERE ONLY: to prevent the above libusb_open() error from occuring, download the Ziag tool. There is no installation, you run the ziag tool by double-click on the zadig-2.5.exe file. Download the Zadiag tool from here: https://zadig.akeo.ie/. Plug in your STM32VLdiscovery board to your Windows 10 computer. Now double-click on the Zadiag.2.5.exe file. Select yes, Select Options menu, select List all devices. You should see STM32 STLink in the list. Select it. Now you want your system to use the WinUSB driver instead of the driver you are currently using. Select Install Drier. When the WinUSB driver is installed you will see a box that says it was sucessfull. Exit the Zadig tool.
 
-On a LINUX system you will use the github project stlink (v1.6.0) to perform this task from a terminal window:
+On a **LINUX** system you will use the github project stlink (v1.6.0) to perform this task from a terminal window:
 $> st-flash write /your-path-to-file/firmware.bin 0x08000000
 
-On a Windows system you will use the github project stlink (v1.6.0) to perform this task from a terminal window:
+On a **Windows** system you will use the github project stlink (v1.6.0) to perform this task from a terminal window:
 $>st-flash write "C:\path-to-your-firmware.bin-file\firmware.bin" 0x08000000
 
-For LINUX or Windows Users: If you have VScode with Platformio installed, after the firmware.bin file is compiled you can hit the "Upload" Button and VScode will run the flash command. Just un-comment the correct lines in Platformio.ini file for either Windows or Linux OS.
+For **LINUX or Windows** Users: If you have VScode with Platformio installed, after the firmware.bin file is compiled you can hit the "Upload" Button and VScode will run the flash command. Just un-comment the correct lines in Platformio.ini file for either Windows or Linux OS.
 
-ON LINUX: if succesfully flashed, via VScode, you will see this at the bottom of the output:
+ON **LINUX**: if succesfully flashed, via VScode, you will see this at the bottom of the output:
 ```
 st-flash 1.6.0
 2021-01-31T18:50:36 INFO common.c: Loading device parameters....
@@ -81,7 +81,7 @@ Flash page at addr: 0x08000000 erased
 2021-01-31T18:50:36 INFO common.c: Flash written and verified! jolly good!
 ```
 
-ON Windows: if successfully flashed, via VScode using ST-LINK_cli tool from STelectronics, you will see this in the output:
+ON **Windows**: if successfully flashed, via VScode using ST-LINK_cli tool from STelectronics, you will see this in the output:
 ```
 STM32 ST-LINK CLI v3.6.0.0
 STM32 ST-LINK Command Line Interface
@@ -105,7 +105,7 @@ Memory programmed in 0s and 234ms.
 Programming Complete.
 ```
 
-For LINUX and WINDOWS users:
+For **LINUX and WINDOWS** users:
 The gdb server is built into the stlink's st-util utility. Start the gdb server by executing the following command in a
 new terminal window:
 $> st-util --stlinkv1
@@ -120,7 +120,7 @@ st-util 1.6.0
 2021-01-31T19:13:39 INFO gdb-server.c: Listening at *:4242...
 
 ```
-For LINUX users: In a second new terminal window start debugging the firmware.bin file you flashed to the STM32VL discovery board by performing the following commands (the gdb server is part of the GNU Arm Embedded Toolchain install):
+For **LINUX** users: In a second new terminal window start debugging the firmware.bin file you flashed to the STM32VL discovery board by performing the following commands (the gdb server is part of the GNU Arm Embedded Toolchain install):
 $>cd /path-to-your-firmware.elf-file/
 $>arm-none-eabi-gdb
 ```
@@ -142,7 +142,7 @@ Type "apropos word" to search for commands related to "word".
 
 ```
 
-For Windows users:
+For **Windows** users:
 The gdb server is built into the GNU Arm Embedded Toolchain. Start the gdb server by doing the following:
 Open a second cmd prompt window or terminal windows and type in the following commands:
 $>cd c:\path-to-your-bin-file
@@ -166,7 +166,7 @@ For help, type "help".
 Type "apropos word" to search for commands related to "word".
 ```
 
-For LINUX nd WINDOW users, at the GDB prompt (gdb) type in the following command:
+For **LINUX and WINDOW** users, at the GDB prompt (gdb) type in the following command:
 
 (gdb) target extended localhost:4242
 
@@ -176,14 +176,14 @@ warning: No executable has been specified and target does not support
 determining executable automatically.  Try using the "file" command.
 0x08000210 in ?? ()
 ```
-For LINUX and WINDOW Users, at the GDB prompt (gdb), type the following command:
+For **LINUX and WINDOW** Users, at the GDB prompt (gdb), type the following command:
 (gdb) file firmware.elf
 
 ```
 A program is being debugged already.
 Are you sure you want to change the file? (y or n)
 ```
-For LINUX and WINDOW Users, type y
+For **LINUX and WINDOW** Users, type y
 ```
 Reading symbols from firmware.elf...
 ```
@@ -191,7 +191,7 @@ Reading symbols from firmware.elf...
 
 ### Here is the gdb session example:
 
-Both LINUX and Windows Users:
+Both **LINUX and Windows** Users:
 (gdb) l
 ```
 1	int i = 0;
@@ -205,31 +205,31 @@ Both LINUX and Windows Users:
 9	int main(void){
 10	  while (1) {
 ```
-Both LINUX and Windows Users:
+Both **LINUX and Windows** Users:
 (gdb) info breakpoints
 ```
 No breakpoints or watchpoints.
 ```
-Both LINUX and Windows Users:
+Both **LINUX and Windows** Users:
 set a break point at right before main call inc routine by typeing the following:
 (gdb) break inc
 ```
 Breakpoint 1 at 0x80002ac: file Demo/main.c, line 5.
 Note: automatically using hardware breakpoints for read-only addresses.
 ```
-Both LINUX and Windows Users:
+Both **LINUX and Windows** Users:
 (gdb) commands
 ```
 Type commands for breakpoint(s) 1, one per line.
 End with a line saying just "end".
 ```
-Both LINUX and Windows Users, Type in the following:
+Both **LINUX and Windows** Users, Type in the following:
 ```
 >printf "i is %d\n",i
 >continue
 >end
 ```
-Both LINUX and Windows Users:
+Both **LINUX and Windows** Users:
 (gdb) cont
 ```
 Continuing.
@@ -257,38 +257,38 @@ i is 20
 Breakpoint 1, inc () at Demo/main.c:5
 --Type <RET> for more, q to quit, c to continue without paging--
 ```
-Both LINUX and Windows Users, type c:
+Both **LINUX and Windows** Users, type c:
 ```
 --Type <RET> for more, q to quit, c to continue without paging--c
 ```
-Both LINUX and Windows Users, Now you will get a rolling screen of output, to stop it press cntrl-c on your keyboard
+Both **LINUX and Windows** Users, Now you will get a rolling screen of output, to stop it press cntrl-c on your keyboard
 
 ```
 ^CBreakpoint 1, Quit
 (gdb)
 ```
-Both LINUX and Windows Users:
+Both **LINUX and Windows** Users:
 (gdb) whatis i
 ```
 type = int
 ```
-Both LINUX and Windows Users:
+Both **LINUX and Windows** Users:
 (gdb) p i
 ```
 $1 = 670
 ```
-Both LINUX and Windows Users:
+Both **LINUX and Windows** Users:
 Now let's change the value of i, by typing the following:
 (gdb) print i=0
 ```
 $2 = 0
 ```
-Both LINUX and Windows Users:
+Both **LINUX and Windows** Users:
 (gdb)p i
 ```
 $3 = 0
 ```
-Both LINUX and Windows Users:
+Both **LINUX and Windows** Users:
 (gdb) cont
 ```
 Continuing.
@@ -313,32 +313,32 @@ Breakpoint 1, inc () at Demo/main.c:5
 5	  i += off;
 i is 20
 ```
-Both LINUX and Windows Users, The output will continue until you press cntrl-c on your keyboard:
+Both **LINUX and Windows** Users, The output will continue until you press cntrl-c on your keyboard:
 ```
 ^CBreakpoint 1, Quit
 ```
-Both LINUX and Windows Users:
+Both **LINUX and Windows** Users:
 to stop debugging the file:
 (gdb) kill
 ```
 Kill the program being debugged? (y or n)
 ```
-Both LINUX and Windows Users, type:  y
+Both **LINUX and Windows Users**, type:  y
 ```
 [Inferior 1 (Remote target) killed]
 ```
-Both LINUX and Windows Users:
+Both **LINUX and Windows** Users:
 (gdb) q
 
-Both LINUX and Window Users, type cntrl-c on your keyboard, the terminal window will return back to the system prompt.
+Both **LINUX and Window Users**, type cntrl-c on your keyboard, the terminal window will return back to the system prompt.
 
-Both LINUX and Window Users, Select the terminal window where you typed in st-util command and hit cntrl-c to exit the st-util command
+Both **LINUX and Window Users**, Select the terminal window where you typed in st-util command and hit cntrl-c to exit the st-util command
 
-For LINUX Users, Now exit out of both terminal windows.
+For **LINUX Users**, Now exit out of both terminal windows.
 
-For LINUX Users, If you want a new gdb session, you must start up two new terminal windows
+For **LINUX Users**, If you want a new gdb session, you must start up two new terminal windows
 
-For Windows Users, type cntrl-c on your keyboard, the terminal window will return back to the system prompt or cmd prompt. Windows users can
+For **Windows Users**, type cntrl-c on your keyboard, the terminal window will return back to the system prompt or cmd prompt. Windows users can
 reuse the same terminal window if they want to restart another gdb session.
 
-All the GDB documentation can be found online at:https://sourceware.org/gdb/current/onlinedocs/gdb/index.html#SEC_Contents
+All the GDB documentation can be found online at: https://sourceware.org/gdb/current/onlinedocs/gdb/index.html#SEC_Contents
