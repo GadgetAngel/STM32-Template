@@ -21,7 +21,7 @@ This project and everyone participating in it is governed by the [GadgetAngel of
 
 ## I don't want to read this whole thing I just have a question!!!
 
-> **Note:** Please don't file an issue to ask a question. You'll get faster results by using the resources below.
+> **Note:** Please don't file an issue to ask a question about Marlin. You'll get faster results by using the Marlin resources below.
 
 Marlin has a Message Board and a Facebook group where our knowledgable user community can provide helpful advice if you have questions.
 
@@ -34,6 +34,10 @@ If chat is more your speed, you can join the MarlinFirmware Discord server:
 * Even though our Discord is pretty active, it may take a while for community members to respond &mdash; please be patient!
 * Use the `#general` channel for general questions or discussion about Marlin.
 * Other channels exist for certain topics or are limited to Patrons. Check the channel list.
+
+## If you question is concerning bootloaders (which is what my intented purpose of starting this repository):
+
+Please feel free to open an Issue ticket and ask your question.
 
 ## How Can I Contribute?
 
