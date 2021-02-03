@@ -193,9 +193,9 @@ void (* const g_pfnVectors[])(void) = {
 	0, 0, 0, 0, 0, 0, 0, 0,
 	0,
 #if defined (STM32F10X_LD_VL) || (defined STM32F10X_MD_VL)
-	[0x1CC/4] = 0xF108F85F
+	[0x1CC/4] =  (void(*)) 0xF108F85F
 #elif defined (STM32F10X_HD_VL)
-	[0x1E0/4] = 0xF108F85F
+	[0x1E0/4] = (void(*)) 0xF108F85F
 #endif
 
 	};
