@@ -40,7 +40,7 @@ int main(void) {
     button = ((GPIOA ->IDR & 0x1) == 0);
     //n++;
     inc();
-
+    //this is a test this is only a test
     /* see 7.2.5 in stm32f100x reference manual */
     if (n & 1) {
       GPIOC ->BSRR = 1 << 8 ;
