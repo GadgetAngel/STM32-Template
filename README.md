@@ -2,7 +2,7 @@ STM32-Template for Linux and Windows 10
 =======================================
 
 A Build template for projects using the **stm32vl discovery board**,
-using the arm embedded gnu toolchain, and the STM32F10x Standard Peripheral Library. See "book.pdf".
+using the arm embedded gnu toolchain, and the STM32F10x Standard Peripheral Library. See "book.pdf". This repository is a modified fork of https://github.com/geoffreymbrown/STM32-Template repository.
 
 Do not use the "book.pdf"'s method of installing the GNU Arm Embedded Toolchain, instead use these instructions:
 
