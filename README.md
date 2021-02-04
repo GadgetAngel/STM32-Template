@@ -441,6 +441,6 @@ Breakpoint 1, assert_failed (
 45        GPIO_StructInit (&GPIO_InitStructure);
 46        GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0;
 ```
-(gdb)q
+(gdb) q
 
 ### end of GDB session example #2
