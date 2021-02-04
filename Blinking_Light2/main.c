@@ -5,9 +5,9 @@
 //global variables
 //for testing purposes
 int ledval = 0;
-int inc_const = 3;
+int inc_const = 1;
 int button;
-int number_limit = 4000;
+//int number_limit = 4000;
 
 // Timer code gloabl variables
 static __IO uint32_t TimingDelay;
@@ -17,8 +17,8 @@ void Delay(uint32_t nTime);
 // increment routine
 void inc(void) {
   ledval += inc_const;
-  if (ledval == number_limit)
-    ledval = 0;
+//  if (ledval == number_limit)
+//    ledval = 0;
 }
 
 int main(void) {
@@ -51,7 +51,7 @@ int main(void) {
   //main loop that toggles the leds and reads the USER 1 button
   while (1) {
 
-    Delay (250); // wait 250ms
+    Delay (50); // wait 250ms
 
     // Read the button - the button pulls down PA0 to logic 0
     button = (GPIO_ReadOutputDataBit(GPIOA, GPIO_Pin_0) == 0);
@@ -71,8 +71,8 @@ int main(void) {
     }
 
     // LED on PC9 and USER button on PA0
-    //if ((ledval & 4) && button) {
-    if ((ledval & 4)) {
+    if ((ledval & 4) && button) {
+    //if ((ledval & 4)) {
       // turn off light
       GPIO_WriteBit(GPIOC , GPIO_Pin_9 , Bit_RESET);
     }
