@@ -19,7 +19,7 @@ void inc(void){
 
 int main(void) {
   //int n = 0;
-  ;int button;
+  //int button;
 
   /* Enable the GPIOA (bit 2) and GPIOC (bit 4) */
   /* See 6.3.7 in stm32f100x reference manual */
