@@ -18,9 +18,12 @@ The STM32VLDISCOVERY board has an STM32F100RBT6B MCU, here is it's datasheet : h
 
 Please obtain the STM32F10x Standard Peripheral Libray from: https://www.st.com/en/embedded-software/stsw-stm32054.html
 
-Download the STM32F10x Standard Peripheral Library and place it on you computer system. I placed mine in
+For a working copy of the STM32F10x Standard Peripheral Library that works with the current ststm32 platform from Platformio, I had to
+create my own modified version of the library called "STM32F10x_StdPeriph_Lib_V3.5.0_mod".  Please obtain my modified version of the STM32F10x Standard Peripheral Libray (STM32F10x_StdPeriph_Lib_V3.5.0_mod): https://github.com/GadgetAngel/STM32F10x_StdPeriph_Lib_V3.5.0_mod.git It is not neccessary to download it manually. If you use platformio.ini file, Platformio will download the modified library automatically for you. Just use my version of the Platformio.ini file that is part of this project.
+
+~Download the STM32F10x Standard Peripheral Library and place it on you computer system. I placed mine in
 "/home/joann/Arm/STM32F10x_StdPeriph_Lib_V3.5.0" on **LINUX** and
-"C:\Users\joann\download_sw\STM32F10x_StdPeriph_Lib_V3.5.0" on **Windows 10**
+"C:\Users\joann\download_sw\STM32F10x_StdPeriph_Lib_V3.5.0" on **Windows 10**~
 
 Download the STM32F10x Standard Peripheral Library and place it on you computer system. Now, (by hand)
 **Adjust the path in the platformio.ini file to match where you placed the "STM32F10x Standard Peripheral Libray" on your
