@@ -45,6 +45,7 @@ computer system**~.
 
    (3) Build with Platformio and Vscode
 
+---
 
 ### Before you can run a gdb session on the STM32VLDISCOVERY board do the following:
 
@@ -112,6 +113,9 @@ Memory programming...
 Memory programmed in 0s and 234ms.
 Programming Complete.
 ```
+
+---
+
 ### How to access GDB server on Linux and Windows machines:
 
 For **LINUX and WINDOWS** users:
@@ -196,6 +200,7 @@ For **LINUX and WINDOW** Users, type y
 ```
 Reading symbols from firmware.elf...
 ```
+---
 ---
 
 ### Here is the gdb session example:
