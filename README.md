@@ -116,7 +116,7 @@ Programming Complete.
 
 ---
 
-### How to access GDB server on Linux and Windows machines:
+### How to START up GDB server on Linux and Windows machines:
 
 For **LINUX and WINDOWS** users:
 The gdb server is built into the stlink's st-util utility. Start the gdb server by executing the following command in a
