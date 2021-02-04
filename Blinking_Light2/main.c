@@ -42,7 +42,6 @@ int main(void) {
   //GPIO_Init((void *) 66U, &GPIO_InitStructure);
 
   // configure PA0 pin
-  GPIO_StructInit (&GPIO_InitStructure);
   GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0;
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
   GPIO_Init(GPIOA , &GPIO_InitStructure);

@@ -463,3 +463,11 @@ Breakpoint 1, assert_failed (
 (gdb) q
 
 ### end of GDB session example #2
+
+---
+
+## To use the built in DEBUG ability of Platformio:
+
+Instead of having to open up two command windows or terminal windows, you can use GDB via openocd in platformio.  Platformio will download the necessary tools as part of the platform ststm32.  All you have to do to start debugging is know what commands to execute and that is why I had you do it the manual way first so you would learn the GDB commands.
+
+After you compile your project, in VScode window, select Run menu and select "Start Debugging", inthe left-side panel where you see the Platformio extension, you should see a "bug on top of a Triangle" sysmbol, press this symbol. the Left side now switches to the Debug panel. At the top of the panel you should see a Green triangle and the words "PIO Debug". Press the green triangle to start the debug session. The PIO debug will break at the start of the main.c routine. The DEBUG CONSOLE (terminal window) should now be available for you to enter in commands. Type "q" when you want to quit running in Debug mode.
