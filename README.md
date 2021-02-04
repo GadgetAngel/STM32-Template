@@ -211,7 +211,7 @@ Reading symbols from firmware.elf...
 ---
 ---
 
-### Here is the gdb session example:
+### Here is the start of GDB session example #1:
 
 Both **LINUX and Windows** Users:
 (gdb) l
@@ -352,6 +352,8 @@ Both **LINUX and Windows Users**, type:  y
 Both **LINUX and Windows** Users:
 (gdb) q
 
+### end of GDB session example #1
+
 Both **LINUX and Window Users**, type cntrl-c on your keyboard, the terminal window will return back to the system prompt.
 
 Both **LINUX and Window Users**, Select the terminal window where you typed in st-util command and hit cntrl-c to exit the st-util command
@@ -364,3 +366,81 @@ For **Windows Users**, type cntrl-c on your keyboard, the terminal window will r
 reuse the same terminal window if they want to restart another gdb session.
 
 All the GDB documentation can be found online at: https://sourceware.org/gdb/current/onlinedocs/gdb/index.html#SEC_Contents
+
+---
+
+### Here is the start of GDB session example #2:
+
+c:\Firmware\Git_Repo\STM32-Template\Blinking_Light2_Build\disco_f100rb>arm-none-eabi-gdb firmware.elf
+```
+C:\Program Files (x86)\GNU Arm Embedded Toolchain\10 2020-q4-major\bin\arm-none-eabi-gdb.exe: warning: Couldn't determine a path for the index cache directory.
+GNU gdb (GNU Arm Embedded Toolchain 10-2020-q4-major) 10.1.90.20201028-git
+Copyright (C) 2020 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+Type "show copying" and "show warranty" for details.
+This GDB was configured as "--host=i686-w64-mingw32 --target=arm-none-eabi".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<https://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+    <http://www.gnu.org/software/gdb/documentation/>.
+
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from firmware.elf...
+```
+(gdb) target extended localhost:4242
+```
+Remote debugging using localhost:4242
+Reset_Handler ()
+    at C:\users\joann\.platformio\packages\framework-cmsis-stm32f1\Source\Templates\gcc\startup_stm32f100xb.S:65
+65        movs r1, #0
+```
+(gdb) info breakpoints
+```
+No breakpoints or watchpoints.
+```
+(gdb) break assert_failed
+```
+Breakpoint 1 at 0x80006dc: file Blinking_Light2\main.c, line 104.
+Note: automatically using hardware breakpoints for read-only addresses.
+```
+(gdb) r
+```
+The program being debugged has been started already.
+Start it from the beginning? (y or n)
+```
+type in y
+```
+Starting program: c:\Firmware\Git_Repo\STM32-Template\Blinking_Light2_Build\disco_f100rb\firmware.elf
+
+Breakpoint 1, assert_failed (
+    file=file@entry=0x8000740 ".pio\\libdeps\\disco_f100rb\\STM32F10x_StdPeriph_Lib_V3.5.0_mod\\Libraries\\STM32F10x_StdPeriph_Driver\\stm32f10x_gpio.c", line=line@entry=178) at Blinking_Light2\main.c:104
+104       void assert_failed(uint8_t* file , uint32_t line) {
+```
+(gdb) bt
+```
+#0  assert_failed (
+    file=file@entry=0x8000740 ".pio\\libdeps\\disco_f100rb\\STM32F10x_StdPeriph_Lib_V3.5.0_mod\\Libraries\\STM32F10x_StdPeriph_Driver\\stm32f10x_gpio.c", line=line@entry=178) at Blinking_Light2\main.c:104
+#1  0x080002f2 in GPIO_Init (GPIOx=GPIOx@entry=0x42, GPIO_InitStruct=GPIO_InitStruct@entry=0x20001ff4)
+    at .pio\libdeps\disco_f100rb\STM32F10x_StdPeriph_Lib_V3.5.0_mod\Libraries\STM32F10x_StdPeriph_Driver\stm32f10x_gpio.c:178
+#2  0x08000614 in main () at Blinking_Light2\main.c:42
+```
+(gdb) list 42
+```
+37        GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
+38        GPIO_InitStructure.GPIO_Speed = GPIO_Speed_2MHz;
+39        // correct use of the GPI_Init call (comment out this out when you want to cause an assertion violation):
+40        //GPIO_Init(GPIOC, &GPIO_InitStructure);
+41        // un-comment the below statement  when you want to cause an assertion violation and use GDB to find it (part of Exercise 4.1)
+42        GPIO_Init((void *) 66U, &GPIO_InitStructure);
+43
+44        // configure PA0 pin
+45        GPIO_StructInit (&GPIO_InitStructure);
+46        GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0;
+```
+(gdb)q
+
+### end of GDB session example #2
