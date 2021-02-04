@@ -31,14 +31,20 @@ computer system**~.
 To test:
 
    (1) install the VScode with Platformio extension.
+
    (2) open this project up in VScode (open the folder STM32-TEMPLATE)
+
    (3) build project using platfomio and VScode, the platformio.ini file is already setup to use main.c in ~Demo~ Blinking_Light2 dirctory
+
 
 To create new projects
 
    (1) clone the Demo directory (name the directory appropriately)
+
    (2) change Platformio.ini file: change default_src_filter to add new sources to the compiler
+
    (3) Build with Platformio and Vscode
+
 
 Before you can run a gdb session on the STM32VLDISCOVERY board do the following:
 
