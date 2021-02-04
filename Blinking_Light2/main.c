@@ -37,9 +37,9 @@ int main(void) {
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_2MHz;
   // correct use of the GPI_Init call (comment out this out when you want to cause an assertion violation):
-  //GPIO_Init(GPIOC, &GPIO_InitStructure);
+  GPIO_Init(GPIOC, &GPIO_InitStructure);
   // un-comment the below statement  when you want to cause an assertion violation and use GDB to find it (part of Exercise 4.1)
-  GPIO_Init((void *) 66U, &GPIO_InitStructure);
+  //GPIO_Init((void *) 66U, &GPIO_InitStructure);
 
   // configure PA0 pin
   GPIO_StructInit (&GPIO_InitStructure);

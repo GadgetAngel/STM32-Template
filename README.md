@@ -365,7 +365,15 @@ For **LINUX Users**, If you want a new gdb session, you must start up two new te
 For **Windows Users**, type cntrl-c on your keyboard, the terminal window will return back to the system prompt or cmd prompt. Windows users can
 reuse the same terminal window if they want to restart another gdb session.
 
+---
+
+### Documentation
+
 All the GDB documentation can be found online at: https://sourceware.org/gdb/current/onlinedocs/gdb/index.html#SEC_Contents
+
+### A Quickstart Guide to Debugging C Programs with gdb:
+
+https://teaching.csse.uwa.edu.au/units/CITS2230/resources/gdb-intro.html
 
 ---
 
