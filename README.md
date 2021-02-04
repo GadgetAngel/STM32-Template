@@ -25,15 +25,14 @@ create my own modified version of the library called "STM32F10x_StdPeriph_Lib_V3
 "/home/joann/Arm/STM32F10x_StdPeriph_Lib_V3.5.0" on **LINUX** and
 "C:\Users\joann\download_sw\STM32F10x_StdPeriph_Lib_V3.5.0" on **Windows 10**~
 
-Download the STM32F10x Standard Peripheral Library and place it on you computer system. Now, (by hand)
-**Adjust the path in the platformio.ini file to match where you placed the "STM32F10x Standard Peripheral Libray" on your
-computer system**.
+~Now, (by hand) **Adjust the path in the platformio.ini file to match where you placed the "STM32F10x Standard Peripheral Libray" on your
+computer system**~.
 
 To test:
 
    (1) install the VScode with Platformio extension.
    (2) open this project up in VScode (open the folder STM32-TEMPLATE)
-   (3) build project using platfomio and VScode, the platformio.ini file is already setup to use main.c in Demo dirctory
+   (3) build project using platfomio and VScode, the platformio.ini file is already setup to use main.c in ~Demo~ Blinking_Light2 dirctory
 
 To create new projects
 
