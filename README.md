@@ -16,7 +16,7 @@ https://www.st.com/en/evaluation-tools/stm32vldiscovery.html#sample-buy from oth
 Documentation for the STM32VLDISCOVERY board can be found: https://www.st.com/en/evaluation-tools/stm32vldiscovery.html#documentation
 The STM32VLDISCOVERY board has an STM32F100RBT6B MCU, here is it's datasheet : https://www.st.com/resource/en/datasheet/stm32f100cb.pdf
 
-Please obtain the STM32F10x Standard Peripheral Libray from: https://www.st.com/en/embedded-software/stsw-stm32054.html
+~Please obtain the STM32F10x Standard Peripheral Libray from: https://www.st.com/en/embedded-software/stsw-stm32054.html~
 
 For a working copy of the STM32F10x Standard Peripheral Library that works with the current ststm32 platform from Platformio, I had to
 create my own modified version of the library called "STM32F10x_StdPeriph_Lib_V3.5.0_mod".  Please obtain my modified version of the STM32F10x Standard Peripheral Libray (STM32F10x_StdPeriph_Lib_V3.5.0_mod): https://github.com/GadgetAngel/STM32F10x_StdPeriph_Lib_V3.5.0_mod.git It is not neccessary to download it manually. If you use platformio.ini file, Platformio will download the modified library automatically for you. Just use my version of the Platformio.ini file that is part of this project.
@@ -28,22 +28,33 @@ create my own modified version of the library called "STM32F10x_StdPeriph_Lib_V3
 ~Now, (by hand) **Adjust the path in the platformio.ini file to match where you placed the "STM32F10x Standard Peripheral Libray" on your
 computer system**~.
 
+Now, (by hand), **Adjust the platformio.ini file:**:
+
+1) under [platformio] section: uncomment the project you want to build by uncommenting the correct "build_dir =xxx". There are the following project build directores: Demo_Build, BlinkingLight_Build, Blinking_Light2_Build, Blinking_Light3_Build.
+
+2) under [plagformio] section: only uncomment **ONE** "build_dir=" at a time.
+
+3) under [common] section: under the "default_src_filter  =", change the project's default_src_filter definition by changing the "-" sign to a "+" sign (before the <project name>) for the project you want to build. There are the following projects included in this repository: <Demo>, <BlinkingLight>, <Blinking_Light2>, <Blinking_Light3>. Leave the other default_src_filter definitions alone.
+
 #### To test:
 
    (1) install the VScode with Platformio extension.
 
    (2) open this project up in VScode (open the folder STM32-TEMPLATE)
 
-   (3) build project using platfomio and VScode, the platformio.ini file is already setup to use main.c in ~Demo~ Blinking_Light2 dirctory
+   (3) build project using platfomio and VScode, by selecting the Build button (check mark) or Upload button (->)
 
 
 #### To create new projects
 
-   (1) clone the Demo directory (name the directory appropriately)
+   (1) clone the Demo directory (name the directory as the "project_name")
 
-   (2) change Platformio.ini file: change default_src_filter to add new sources to the compiler
+   (2) create a new folder under STM32_Template as "project_name"_Build (.e.e, append the project_name with "_Build" string for the new directory name). Leave the directory empty. Platormio.ini will build inside this new directory.
 
-   (3) Build with Platformio and Vscode
+   (3) change Platformio.ini file: add a new build_dir = under the section [platformio]; the new main.c file you created for your project under the new project_name directory has to be added in so the compiler will compile your source code. To add your main.c for the compiler you need to create a new "default_src_filter" definition by doing the following: add a new line (CR/LF) under [common] section's "default_src_filter=" that looks like the following: +<project_name>
+   Ensure that all other project_names have a "-" sign in front of their "default_src_filter" definitions.
+
+   (3) Build with Platformio and Vscode, by selecting the Build button (check mark) or Upload button (->)
 
 ---
 
