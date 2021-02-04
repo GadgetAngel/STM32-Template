@@ -46,7 +46,7 @@ computer system**~.
    (3) Build with Platformio and Vscode
 
 
-Before you can run a gdb session on the STM32VLDISCOVERY board do the following:
+### Before you can run a gdb session on the STM32VLDISCOVERY board do the following:
 
 Because the STM32VL discovery board has a built in st-link-v1 we can use it to flash our compiled firmware.elf file to the MCU for
 testing and debugging.
@@ -112,6 +112,7 @@ Memory programming...
 Memory programmed in 0s and 234ms.
 Programming Complete.
 ```
+### How to access GDB server on Linux and Windows machines:
 
 For **LINUX and WINDOWS** users:
 The gdb server is built into the stlink's st-util utility. Start the gdb server by executing the following command in a
