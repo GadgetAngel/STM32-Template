@@ -23,32 +23,25 @@ void inc(void) {
 
 int main(void) {
 
-  GPIO_InitTypeDef GPIOC_InitStructure;
-  //GPIO_InitTypeDef GPIOA_InitStructure;
+  GPIO_InitTypeDef GPIO_InitStructure;
 
 
   // Enable Peripheral Clocks
-  //enable clocks for Port C for the LEDs on PC8 and PC9
-  RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC , ENABLE);
-  //enable clocks for Port A for the USER button on PA0
-  //RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA , ENABLE);
-
+  //enable clocks for Port C for the LEDs on PC8 and PC9, and Port A for the User button on PA0
+  RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC | RCC_APB2Periph_GPIOA , ENABLE);
 
   // Configure Pins
-  GPIO_StructInit (&GPIOC_InitStructure);
-  // configure PC9 pin
-  GPIOC_InitStructure.GPIO_Pin = GPIO_Pin_9;
-  // configure PC8 pin
-  //GPIOC_InitStructure.GPIO_Pin = GPIO_Pin_8;
-  GPIOC_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
-  GPIOC_InitStructure.GPIO_Speed = GPIO_Speed_2MHz;
-  GPIO_Init(GPIOC , &GPIOC_InitStructure);
+  GPIO_StructInit (&GPIO_InitStructure);
+  // configure PC9 pin and PC8
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_9 | GPIO_Pin_8;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_2MHz;
+  GPIO_Init(GPIOC, &GPIO_InitStructure);
   // configure PA0 pin
-  //GPIO_StructInit (&GPIOA_InitStructure);
-  //GPIOA_InitStructure.GPIO_Pin = GPIO_Pin_0;
-  //GPIOA_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
-  //GPIOA_InitStructure.GPIO_Speed = GPIO_Speed_2MHz;
-  //GPIO_Init(GPIOA , &GPIOA_InitStructure);
+  GPIO_StructInit (&GPIO_InitStructure);
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
+  GPIO_Init(GPIOA , &GPIO_InitStructure);
 
 
   // Configure SysTick Timer
@@ -61,21 +54,21 @@ int main(void) {
     Delay (250); // wait 250ms
 
     // Read the button - the button pulls down PA0 to logic 0
-    //button = (GPIO_ReadOutputDataBit(GPIOA, GPIO_Pin_0) == 0);
+    button = (GPIO_ReadOutputDataBit(GPIOA, GPIO_Pin_0) == 0);
 
     inc();
 
     // toggle leds based on the value of ledval
 
     //LED on PC8
-    //if (ledval & 1) {
+    if (ledval & 1) {
       //turn off light
-      //GPIO_WriteBit(GPIOC , GPIO_Pin_8 , Bit_RESET);
-    //}
-   // else {
+      GPIO_WriteBit(GPIOC , GPIO_Pin_8 , Bit_RESET);
+    }
+    else {
       //turn on light
-      //GPIO_WriteBit(GPIOC , GPIO_Pin_8 , Bit_SET);
-    //}
+      GPIO_WriteBit(GPIOC , GPIO_Pin_8 , Bit_SET);
+    }
 
     // LED on PC9 and USER button on PA0
     //if ((ledval & 4) && button) {
