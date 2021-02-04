@@ -159,8 +159,16 @@ For **Windows** users:
 The gdb server is built into the GNU Arm Embedded Toolchain. Start the gdb server by doing the following:
 Open a second cmd prompt window or terminal windows and type in the following commands:
 $>cd c:\path-to-your-bin-file
-c:\path-to-your-elf-file\> arm-none-eabi-gdb
 
+my example:
+```
+$> cd c:\Firmware\Git_Repo\STM32-Template\Blinking_Light2_Build\disco_f100rb
+```
+Now type the following command:
+```
+c:\path-to-your-elf-file\> arm-none-eabi-gdb
+```
+Output from arme-none-eabi-gdb command:
 ```
 GNU gdb (GNU Arm Embedded Toolchain 10-2020-q4-major) 10.1.90.20201028-git
 Copyright (C) 2020 Free Software Foundation, Inc.
