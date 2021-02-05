@@ -1,6 +1,8 @@
 #include "stm32f10x.h"
-#include "../../STM32_Template/.pio/disco_f100rb/STM32F10x_StdPeriph_Lib_V3.5.0_mod/Libraries/STM32F10x_StdPeriph_Driver/stm32f10x_rcc.h"
-#include "../../STM32_Template/.pio/disco_f100rb/STM32F10x_StdPeriph_Lib_V3.5.0_mod/Libraries/STM32F10x_StdPeriph_Driver/stm32f10x_gpio.h"
+#include "stm32f10x_rcc.h"
+//#include "../../STM32_Template/.pio/disco_f100rb/STM32F10x_StdPeriph_Lib_V3.5.0_mod/Libraries/STM32F10x_StdPeriph_Driver/stm32f10x_rcc.h"
+#include "stm32f10x_gpio.h"
+//#include "../../STM32_Template/.pio/disco_f100rb/STM32F10x_StdPeriph_Lib_V3.5.0_mod/Libraries/STM32F10x_StdPeriph_Driver/stm32f10x_gpio.h"
 
 //global variables
 //for testing purposes
