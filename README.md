@@ -49,9 +49,7 @@ Now, (by hand), **Adjust the platformio.ini file:**:
 
    (1) clone the Demo directory (name the directory as the "project_name")
 
-   (2) create a new folder under STM32_Template as "project_name"_Build (.e.e, append the project_name with "_Build" string for the new directory name). Leave the directory empty. Platormio.ini will build inside this new directory.
-
-   (3) change Platformio.ini file: add a new build_dir = under the section [platformio]; the new main.c file you created for your project under the new project_name directory has to be added in so the compiler will compile your source code. To add your main.c for the compiler you need to create a new "default_src_filter" definition by doing the following: add a new line (CR/LF) under [common] section's "default_src_filter=" that looks like the following: +<project_name>
+   (2) change Platformio.ini file: add a new build_dir = under the section [platformio]. After you add the "build_dir=" command Platformio will create the new directory for you; the new main.c file you created for your project under the new project_name directory has to be added in so the compiler will compile your source code. To add your main.c for the compiler you need to create a new "default_src_filter" definition by doing the following: add a new line (CR/LF) under [common] section's "default_src_filter=" that looks like the following: +<project_name>
    Ensure that all other project_names have a "-" sign in front of their "default_src_filter" definitions.
 
    (3) Build with Platformio and Vscode, by selecting the Build button (check mark) or Upload button (->)
