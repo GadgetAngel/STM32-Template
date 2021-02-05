@@ -3,13 +3,20 @@
 //global variables
 //for testing purposes
 typedef enum {false, true} bool;
-bool button = false;
+bool button = true;
+uint16_t button_value = -1;
+int i = 0;
+uint32_t counter = 0;
 
 void delay(void) {
-  int i = 100000; /* About 1/4 second delay */
+  i = 100000; /* About 1/4 second delay */
 
   while (i-- > 0)
     asm("nop");
+}
+
+void do_nothing (void) {
+  return;
 }
 
 int main(void) {
@@ -24,10 +31,15 @@ int main(void) {
   /* 9.2.1 in stm32f100x reference manual of RM0008*/
   GPIOA ->CRL = 0x04;
 
-  //Configure the LED
+  //Configure the Blue LED
   /* Set GPIOC Pin 8 as outputs at 2Mhz speed */
   /* 9.2.2 in stm32f100x reference manual of RM0008*/
   GPIOC ->CRH = 0x02;
+
+  //Configure the Green LED
+  /* Set GPIOC Pin 9 as outputs at 2Mhz speed */
+  /* 9.2.2 in stm32f100x reference manual of RM0008*/
+  GPIOC ->CRH |= 0x20;
 
   while (1) {
     delay();
@@ -38,18 +50,25 @@ int main(void) {
     // Read the button - the button pulls down PA0 to logic 0
     //(button circuit is active low) so change the logic
     //when the button is pressed the if statement will evaluate to true
-    if (((GPIOA ->IDR & 0x1) == 0) == 0) {
+    button_value = (GPIOA ->IDR & 0x1);
+    counter++;
+    if (button_value == 0) {
+      button = false;  //when the button is not pressed this will be false
+      /* see 9.2.5 in stm32f100x reference manual of RM0008*/
+      //turn off the Blue light, PC8 is the blue LED
+      GPIOC ->BSRR = 1 << 24;
+      //turn on the Green light, PC9 is the green LED
+      GPIOC ->BSRR = 1 << 9;
+    }
+    else {
       button = true;  //when the button is pressed this will be true
       //  turn ON the light, PC8 is the blue LED
       /* see 9.2.5 in stm32f100x reference manual of RM0008*/
-      //LED on PC8
+      //turn on the Blue light, PC8
       GPIOC ->BSRR = 1 << 8;
-    }
-    else {
-      button = false;  //when the button is not pressed this will be false
-      /* see 9.2.5 in stm32f100x reference manual of RM0008*/
-      //turn off the light, PC8 is the blue LED
-      GPIOC ->BSRR = 1 << 24;
+      //turn off the Green light, PC9
+      GPIOC ->BSRR = 1 << 25;
+      do_nothing();
     }
   }
 }
