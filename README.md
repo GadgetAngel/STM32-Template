@@ -18,23 +18,28 @@ The STM32VLDISCOVERY board has an STM32F100RBT6B MCU, here is it's datasheet : h
 
 ~Please obtain the STM32F10x Standard Peripheral Libray from: https://www.st.com/content/st_com/en/products/embedded-software/mcu-mpu-embedded-software/stm32-embedded-software/stm32-standard-peripheral-libraries/stsw-stm32054.html~
 
-For a working copy of the STM32F10x Standard Peripheral Library that works with the current ststm32 platform from Platformio, I had to
-create my own modified version of the library called "STM32F10x_StdPeriph_Lib_V3.5.0_mod".  Please obtain my modified version of the STM32F10x Standard Peripheral Libray (STM32F10x_StdPeriph_Lib_V3.5.0_mod): https://github.com/GadgetAngel/STM32F10x_StdPeriph_Lib_V3.5.0_mod.git It is not neccessary to download it manually. If you use platformio.ini file, Platformio will download the modified library automatically for you. Just use my version of the Platformio.ini file that is part of this project.
+For a working copy of the STM32F10x Standard Peripheral Library that works with the current ststm32 platform from Platformio, I had to create my own modified version of the library called "STM32F10x_StdPeriph_Lib_V3.5.0_mod".  Please obtain my modified version of the STM32F10x Standard Peripheral Libray (STM32F10x_StdPeriph_Lib_V3.5.0_mod): https://github.com/GadgetAngel/STM32F10x_StdPeriph_Lib_V3.5.0_mod.git It is not neccessary to download it manually. If you use platformio.ini file, Platformio will download the modified library automatically for you. Just use my version of the Platformio.ini file that is part of this project.
 
 ~Download the STM32F10x Standard Peripheral Library and place it on you computer system. I placed mine in
 "/home/joann/Arm/STM32F10x_StdPeriph_Lib_V3.5.0" on **LINUX** and
 "C:\Users\joann\download_sw\STM32F10x_StdPeriph_Lib_V3.5.0" on **Windows 10**~
 
-~Now, (by hand) **Adjust the path in the platformio.ini file to match where you placed the "STM32F10x Standard Peripheral Libray" on your
-computer system**~.
+~Now, (by hand) **Adjust the path in the platformio.ini file to match where you placed the "STM32F10x Standard Peripheral Libray" on your computer system**~.
 
-Now, (by hand), **Adjust the platformio.ini file:**:
+Now, (by hand), **Adjust the following items in the platformio.ini file:**:
 
-1) under [platformio] section: uncomment the project you want to build by uncommenting the correct "build_dir =xxx". There are the following project build directores: Demo_Build, BlinkingLight_Build, Blinking_Light2_Build, Blinking_Light3_Build.
+1) under [platformio] section: uncomment the project you want to build by uncommenting the correct "build_dir =xxx". There are the following project build directores: Demo_Build, BlinkingLight_Build, Blinking_Light2_Build, Blinking_Light3_Build, Button_Light_Build.
 
 2) under [plagformio] section: only uncomment **ONE** "build_dir=" at a time.
 
-3) under [common] section: under the "default_src_filter  =", change the project's default_src_filter definition by changing the "-" sign to a "+" sign (before the <project name>) for the project you want to build. There are the following projects included in this repository: <Demo>, <BlinkingLight>, <Blinking_Light2>, <Blinking_Light3>. Leave the other default_src_filter definitions alone.
+3) under [common] section: under the "default_src_filter  =", change the project's default_src_filter definition by changing the "-" sign to a "+" sign (before the <project name>) for the project you want to build. There are the following projects included in this repository: <Demo>, <BlinkingLight>, <Blinking_Light2>, <Blinking_Light3>, <Button_Light>.
+
+The following projects need the additional source files enabled (change -<> to +<>) in the "default_src_filter =":
+  1) Blinking_Light2 needs stm32f10x_rcc.c and stm32f10x_gpio.c
+  2) BLinking_Light3 needs stm32f10x_rcc.c and stm32f10x_gpio.c
+  3) All other projects do not need additonal c source files
+
+Leave the other default_src_filter definitions alone.
 
 #### To test:
 
