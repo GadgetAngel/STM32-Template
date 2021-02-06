@@ -1,4 +1,3 @@
-
 #if defined(STM32_F100RB)
   #include <stm32f10x.h>
   #include <stm32f10x_rcc.h>
