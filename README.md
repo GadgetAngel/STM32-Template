@@ -16,7 +16,7 @@ https://www.st.com/en/evaluation-tools/stm32vldiscovery.html#sample-buy from oth
 Documentation for the STM32VLDISCOVERY board can be found: https://www.st.com/en/evaluation-tools/stm32vldiscovery.html#documentation
 The STM32VLDISCOVERY board has an STM32F100RBT6B MCU, here is it's datasheet : https://www.st.com/resource/en/datasheet/stm32f100cb.pdf
 
-~Please obtain the STM32F10x Standard Peripheral Libray from: https://www.st.com/en/embedded-software/stsw-stm32054.html~
+~Please obtain the STM32F10x Standard Peripheral Libray from: https://www.st.com/content/st_com/en/products/embedded-software/mcu-mpu-embedded-software/stm32-embedded-software/stm32-standard-peripheral-libraries/stsw-stm32054.html~
 
 For a working copy of the STM32F10x Standard Peripheral Library that works with the current ststm32 platform from Platformio, I had to
 create my own modified version of the library called "STM32F10x_StdPeriph_Lib_V3.5.0_mod".  Please obtain my modified version of the STM32F10x Standard Peripheral Libray (STM32F10x_StdPeriph_Lib_V3.5.0_mod): https://github.com/GadgetAngel/STM32F10x_StdPeriph_Lib_V3.5.0_mod.git It is not neccessary to download it manually. If you use platformio.ini file, Platformio will download the modified library automatically for you. Just use my version of the Platformio.ini file that is part of this project.
