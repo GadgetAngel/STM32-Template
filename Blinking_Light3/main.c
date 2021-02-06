@@ -1,6 +1,13 @@
-#include <stm32f10x.h>
-#include <stm32f10x_rcc.h>
-#include <stm32f10x_gpio.h>
+
+#if defined(STM32_F100RB)
+  #include <stm32f10x.h>
+  #include <stm32f10x_rcc.h>
+  #include <stm32f10x_gpio.h>
+#elif defined(STM32_F407VG)
+  #include <stm32f4xx.h>
+  #include <stm32f4xx_rcc.h>
+  #include <stm32f4xx_gpio.h>
+#endif
 
 //global variables
 //for testing purposes

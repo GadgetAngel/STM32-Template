@@ -1,4 +1,8 @@
-#include <stm32f10x.h>
+#if defined(STM32_F100RB)
+  #include <stm32f10x.h>
+#elif defined(STM32_F407VG)
+  #include <stm32f4xx.h>
+#endif
 
 //global variables
 //for testing purposes
