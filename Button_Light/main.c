@@ -8,7 +8,7 @@
 //for testing purposes
 typedef enum {false, true} bool;
 bool button = true;
-uint16_t button_value = 1;
+uint32_t button_value = 1;
 int i2 = 0;
 uint32_t counter = 0;
 
@@ -53,7 +53,7 @@ for the debug interface. If I’m not mistaken, they are all on port A. SWDIO is
     //user button is on PA0 PIN of the STM32F407VG on STM32F4 Discovery board.
     // See 6.3.10 in STM32F407x reference manual of RM0090
     // Enable the GPIOA (bit 0) and GPIOD (bit 3)
-    RCC ->AHB1ENR |= (0x00000008 | 0x00000001);
+    RCC ->AHB1ENR |= (RCC_AHB1ENR_GPIODEN | RCC_AHB1ENR_GPIOAEN);
   #endif
 
   #if defined(STM32_F100RB)
@@ -68,12 +68,12 @@ for the debug interface. If I’m not mistaken, they are all on port A. SWDIO is
     // [bit 1, bit 0] for Pin 0 must be set to 0,0 for Input. We need only two bits out of 32 bits
     // Important Note:
     // Watch out that you do not disable the SWDIO is PA13, SWCLK is PA14
-    GPIOA ->MODER &= 0xFFFFFFFC;
-    // See table 35 in section 8.3 and see section 8.4.4 in STM32F407x reference manual of RM0090
-    // [bit 1, bit 0 = 0, 0] for No pull-up, pull-down (Table 35: Floating)
+    GPIOA ->MODER |= (GPIO_MODER_MODER0-GPIO_MODER_MODER0);
+    // See table 35 in  section 8.3 and see section 8.4.4 in STM32F407x reference manual of RM0090
+    // [bit 1, bit 0 = 1, 0] Input PD (Table 35: Pull down)
     // Important Note:
     // Watch out that you do not disable the SWDIO is PA13, SWCLK is PA14
-    GPIOA ->PUPDR &= 0xFFFFFFFC;
+    GPIOA ->PUPDR |= (GPIO_PUPDR_PUPDR0_1);
   #endif
 
   #if defined(STM32_F100RB)
@@ -84,11 +84,11 @@ for the debug interface. If I’m not mistaken, they are all on port A. SWDIO is
   #elif defined(STM32_F407VG)
     //Configure the Blue LED, PD15, for STM32F407VGT6 on STM32F4 Discovery board.
     // See table 35 in section 8.3 and see section 8.4.1 in STM32F407x reference manual of RM0090
-    // I/O configuration = GP output, PP: MODER=01; OTYPER=0; OSPEEDR=(00: Low speed); PUPDR=00; for PIN 15 on GPIOD
-    GPIOD ->MODER |= (uint32_t)(1 << 30);
-    GPIOD ->OTYPER &= 0xFFFF7FFF;
-    GPIOD ->OSPEEDR &= 0x3FFFFFFF;
-    GPIOD ->PUPDR &= 0x3FFFFFFF;
+    // I/O configuration = GP output, PP: MODER=01; OTYPER=0; OSPEEDR=(01: Medium speed); PUPDR=00; for PIN 15 on GPIOD
+    GPIOD ->MODER |= (GPIO_MODER_MODER15_0);
+    GPIOD ->OTYPER |= (GPIO_OTYPER_OT_15-GPIO_OTYPER_OT_15);
+    GPIOD ->OSPEEDR |= GPIO_OSPEEDER_OSPEEDR15_0;
+    GPIOD ->PUPDR |= (GPIO_PUPDR_PUPDR15-GPIO_PUPDR_PUPDR15);
   #endif
 
   #if defined(STM32_F100RB)
@@ -99,11 +99,11 @@ for the debug interface. If I’m not mistaken, they are all on port A. SWDIO is
   #elif defined(STM32_F407VG)
     //Configue the Green LED, PD12, for STM32F407VGT6 on STM32F4 Discovery board.
     // See table 35 in section 8.3 and see section 8.4.1 in STM32F407x reference manual of RM0090
-    // I/O configuration = GP output, PP: MODER=01; OTYPER=0; OSPEEDR=(00: Low speed); PUPDR=00; for PIN 12 on GPIOD
-    GPIOD ->MODER |= (uint32_t)(1 << 24);
-    GPIOD ->OTYPER &= 0xFFFF6FFF;
-    GPIOD ->OSPEEDR &= 0xFCFFFFFF;
-    GPIOD ->PUPDR &= 0xFCFFFFFF;
+    // I/O configuration = GP output, PP: MODER=01; OTYPER=0; OSPEEDR=(01: Medium speed); PUPDR=00; for PIN 12 on GPIOD
+    GPIOD ->MODER |= (GPIO_MODER_MODER12_0);
+    GPIOD ->OTYPER |= (GPIO_OTYPER_OT_12-GPIO_OTYPER_OT_12);
+    GPIOD ->OSPEEDR |= GPIO_OSPEEDER_OSPEEDR12_0;
+    GPIOD ->PUPDR |= (GPIO_PUPDR_PUPDR12-GPIO_PUPDR_PUPDR12);
   #endif
 
   while (1) {
@@ -122,7 +122,7 @@ for the debug interface. If I’m not mistaken, they are all on port A. SWDIO is
       //See section 8.4.5 in STM32F407x reference manual of RM0090
       // Read the button - the button pulls down PA0 to logic 0
       //(button circuit is active low)
-      button_value = (GPIOA ->IDR & 0x00000001);
+      button_value = ((GPIOA ->IDR) & GPIO_IDR_IDR_0);
     #endif
 
     counter++;
@@ -139,8 +139,8 @@ for the debug interface. If I’m not mistaken, they are all on port A. SWDIO is
         //turn off the Blue Light, PD15
         //turn on the Green Light, PD12
         //see section 8.4.7 in in STM32F407x reference manual of RM0090
-        GPIOD ->BSRRH |= (uint16_t)(1 << 15); //reset register
-        GPIOD ->BSRRL |= (uint16_t)(1 << 12); //set register
+        GPIOD ->BSRRH |= GPIO_BSRR_BS_15; //reset register
+        GPIOD ->BSRRL |= GPIO_BSRR_BS_12; //set register
       #endif
 
     }
@@ -158,8 +158,8 @@ for the debug interface. If I’m not mistaken, they are all on port A. SWDIO is
         //turn ON Blue Light, PD15
         //turn Off Green Light, PD12
         //see section 8.4.7 in in STM32F407x reference manual of RM0090
-        GPIOD ->BSRRL |= (uint16_t)(1 << 15);  //set register
-        GPIOD ->BSRRH |= (uint16_t)(1 << 12);  //reset register
+        GPIOD ->BSRRL |= GPIO_BSRR_BS_15;  //set register
+        GPIOD ->BSRRH |= GPIO_BSRR_BS_12;  //reset register
       #endif
 
       //break point for testing purposes
