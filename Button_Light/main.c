@@ -8,18 +8,38 @@
 //for testing purposes
 typedef enum {false, true} bool;
 bool button = true;
-uint16_t button_value = -1;
-int i = 0;
+uint16_t button_value = 1;
+int i2 = 0;
 uint32_t counter = 0;
 
 void delay(void) {
-  i = 100000; /* About 1/4 second delay */
+  int i = 400000; /* About 1/4 second delay */
 
   while (i-- > 0)
     asm("nop");
 }
 
 int main(void) {
+
+/*
+ERROR:
+GNU MCU Eclipse OpenOCD, 64-bitOpen On-Chip Debugger 0.10.0+dev-00593-g23ad80df4 (2019-04-23-00:01)
+Licensed under GNU GPL v2
+For bug reports, read
+        http://openocd.org/doc/doxygen/bugs.html
+
+Error: init mode failed (unable to connect to the target)
+in procedure 'program'
+** OpenOCD init failed **
+shutdown command invoked
+
+*** [upload] Error 1
+This occurs because of driver error:
+
+Wisdom on the internet has it that this happens if you reconfigure
+the SWD pins such that they no longer work
+for the debug interface. If I’m not mistaken, they are all on port A. SWDIO is PA13, SWCLK is PA14
+*/
 
   #if defined(STM32_F100RB)
     //Enable the clocks for GPIOC and GPIOA 0x10
@@ -33,7 +53,7 @@ int main(void) {
     //user button is on PA0 PIN of the STM32F407VG on STM32F4 Discovery board.
     // See 6.3.10 in STM32F407x reference manual of RM0090
     // Enable the GPIOA (bit 0) and GPIOD (bit 3)
-    RCC ->AHB1ENR |= (0x8 | 0x1);
+    RCC ->AHB1ENR |= (0x00000008 | 0x00000001);
   #endif
 
   #if defined(STM32_F100RB)
@@ -46,10 +66,14 @@ int main(void) {
     // See table 35 in section 8.3 and see section 8.4.1 in STM32F407x reference manual of RM0090
     // I/O configuartion = Input Floating; MODER=00; OTYPER=N/A; OSPEEDR=N/A; PUPDR=00;
     // [bit 1, bit 0] for Pin 0 must be set to 0,0 for Input. We need only two bits out of 32 bits
-    GPIOA ->MODER &= 0xFC;
+    // Important Note:
+    // Watch out that you do not disable the SWDIO is PA13, SWCLK is PA14
+    GPIOA ->MODER &= 0xFFFFFFFC;
     // See table 35 in section 8.3 and see section 8.4.4 in STM32F407x reference manual of RM0090
     // [bit 1, bit 0 = 0, 0] for No pull-up, pull-down (Table 35: Floating)
-    GPIOA ->PUPDR &= 0xFC;
+    // Important Note:
+    // Watch out that you do not disable the SWDIO is PA13, SWCLK is PA14
+    GPIOA ->PUPDR &= 0xFFFFFFFC;
   #endif
 
   #if defined(STM32_F100RB)
@@ -61,8 +85,8 @@ int main(void) {
     //Configure the Blue LED, PD15, for STM32F407VGT6 on STM32F4 Discovery board.
     // See table 35 in section 8.3 and see section 8.4.1 in STM32F407x reference manual of RM0090
     // I/O configuration = GP output, PP: MODER=01; OTYPER=0; OSPEEDR=(00: Low speed); PUPDR=00; for PIN 15 on GPIOD
-    GPIOD ->MODER |= (1 << 30);
-    GPIOD ->OTYPER &= 0x7FFF;
+    GPIOD ->MODER |= (uint32_t)(1 << 30);
+    GPIOD ->OTYPER &= 0xFFFF7FFF;
     GPIOD ->OSPEEDR &= 0x3FFFFFFF;
     GPIOD ->PUPDR &= 0x3FFFFFFF;
   #endif
@@ -76,8 +100,8 @@ int main(void) {
     //Configue the Green LED, PD12, for STM32F407VGT6 on STM32F4 Discovery board.
     // See table 35 in section 8.3 and see section 8.4.1 in STM32F407x reference manual of RM0090
     // I/O configuration = GP output, PP: MODER=01; OTYPER=0; OSPEEDR=(00: Low speed); PUPDR=00; for PIN 12 on GPIOD
-    GPIOD ->MODER |= (1 << 24);
-    GPIOD ->OTYPER &= 0x6FFF;
+    GPIOD ->MODER |= (uint32_t)(1 << 24);
+    GPIOD ->OTYPER &= 0xFFFF6FFF;
     GPIOD ->OSPEEDR &= 0xFCFFFFFF;
     GPIOD ->PUPDR &= 0xFCFFFFFF;
   #endif
@@ -98,12 +122,12 @@ int main(void) {
       //See section 8.4.5 in STM32F407x reference manual of RM0090
       // Read the button - the button pulls down PA0 to logic 0
       //(button circuit is active low)
-      button_value = (GPIOA ->IDR & 0x1);
+      button_value = (GPIOA ->IDR & 0x00000001);
     #endif
 
     counter++;
-    if (button_value == 0) {
-      //button_value is equal to 0 when the button is pressed
+    if (button_value == 1) {
+      //button_value is equal to 1 when the button is pressed
       button = false;
       #if defined(STM32_F100RB)
         /* see 9.2.5 in stm32f100x reference manual of RM0008*/
@@ -115,13 +139,13 @@ int main(void) {
         //turn off the Blue Light, PD15
         //turn on the Green Light, PD12
         //see section 8.4.7 in in STM32F407x reference manual of RM0090
-        GPIOD ->BSRRH = (1 << 15); //reset register
-        GPIOD ->BSRRL = (1 << 12); //set register
+        GPIOD ->BSRRH |= (uint16_t)(1 << 15); //reset register
+        GPIOD ->BSRRL |= (uint16_t)(1 << 12); //set register
       #endif
 
     }
     else {
-      //button_value is equal to 1 when the button is NOT pressed
+      //button_value is equal to 0 when the button is NOT pressed
       button = true;
       #if defined(STM32_F100RB)
         //  turn ON the light, PC8 is the blue LED
@@ -134,8 +158,8 @@ int main(void) {
         //turn ON Blue Light, PD15
         //turn Off Green Light, PD12
         //see section 8.4.7 in in STM32F407x reference manual of RM0090
-        GPIOD ->BSRRL = (1 << 15);  //set register
-        GPIOD ->BSRRH = (1 << 12);  //reset register
+        GPIOD ->BSRRL |= (uint16_t)(1 << 15);  //set register
+        GPIOD ->BSRRH |= (uint16_t)(1 << 12);  //reset register
       #endif
 
       //break point for testing purposes
