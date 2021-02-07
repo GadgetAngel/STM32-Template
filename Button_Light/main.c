@@ -141,5 +141,6 @@ int main(void) {
       //break point for testing purposes
       asm("nop");
     }
+    asm("nop");
   }
 }
