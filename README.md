@@ -1,7 +1,7 @@
 STM32-Template for Linux and Windows 10
 =======================================
 
-A Build template for projects using the **STM32VLDISCOVERY board, STM32F407 Discovery Board, STM32L433 Nucleo-64 board and STM32F767 Nucleo-144 board**, using the arm embedded gnu toolchain, and the STM32F10x Standard Peripheral Library, STM32F40xx Standard Peripheral Library, CMSIS libraries, STM32F7 Standard Peripheral Library, and other. Trying to do things using "bare Metal" techniques but using the ST Libraries when I get stuck. This project is a learning project. I am trying to learn embedded programming using C Language and using the GNU toolchain. The "book.pdf" is where I am starting and expanding what I learn on the STM32F1 board to doing and learning by trial an error on the STM32F4 and STM32F4 MCUs.  This repository is a modified fork of https://github.com/geoffreymbrown/STM32-Template repository.
+A Build template for projects using the **STM32VLDISCOVERY board, STM32F407 Discovery Board, and STM32F767 Nucleo-144 board**, using the arm embedded gnu toolchain, and the STM32F10x Standard Peripheral Library, STM32F40xx Standard Peripheral Library, CMSIS libraries, STM32F7 Standard Peripheral Library, and other. Trying to do things using "bare Metal" techniques but using the ST Libraries when I get stuck. This project is a learning project. I am trying to learn embedded programming using C Language and using the GNU toolchain. The "book.pdf" is where I am starting and expanding what I learn on the STM32F1 board to doing and learning by trial an error on the STM32F4 and STM32F4 MCUs.  This repository is a modified fork of https://github.com/geoffreymbrown/STM32-Template repository.
 
 Do not use the "book.pdf"'s method of installing codesourcery GNU Toolchain tools!! You should use the GNU Arm Embedded Toolchain tools. The below instructions will show you how to install the GNU Arm Embedded Toolchain:
 
@@ -15,7 +15,21 @@ https://www.st.com/en/evaluation-tools/stm32vldiscovery.html#sample-buy from oth
 Documentation for the STM32VLDISCOVERY board can be found: https://www.st.com/en/evaluation-tools/stm32vldiscovery.html#documentation
 The STM32VLDISCOVERY board has an STM32F100RBT6B MCU, here is it's datasheet : https://www.st.com/resource/en/datasheet/stm32f100cb.pdf
 
-### Please be aware that the STM32VLDISCOVERY board's ST-LINK-V1 does not work with the Window's ST-LINK-V2 Utility.  At this time the only tool that I can use to upload and download firmware to the STM32VL-Discovery board is the st-link utility on github.com and even that does not work in the latestest version. You must use the st-link utility V1.6.0 (https://github.com/stlink-org/stlink/tree/v1.6.0), with VScode and Platformio if you want to automatically upload your code to the board or debug your code on the board using VScode and the onboard st-link probe. The other discovery or Nucleo boards have st-link-v2 on board so they work with the Window's ST-LINK-UTILITY-V2.  From this point on if I am talking about the STM32VL discovery board, you can replace any of the board listed in the title for its name. I am trying to make all my examples run on all the different MCUs.
+### ~Please be aware that the STM32VLDISCOVERY board's ST-LINK-V1 does not work with the Window's ST-LINK-V2 Utility.  At this time the only tool that~ I can use to upload and download firmware to the STM32VL-Discovery board is the st-link utility on github.com and even that does not work in the latestest version. You must use the st-link utility V1.6.0 (https://github.com/stlink-org/stlink/tree/v1.6.0), with VScode and Platformio if you want to automatically upload your code to the board or debug your code on the board using VScode and the onboard st-link probe. The other discovery or Nucleo boards have st-link-v2 on board so they work with the Window's ST-LINK-UTILITY-V2. I recently discovered that because the stlink on the STM32VLDiscovery board is a version 1 that it does not need the Window's USB drivers. In fact if the Window's USB driver or the Zadig tool's USB driver are installed they will stop the st-link-v1 device from working with Window's ST-LINK-UTILITY-V2.  For me if under Windows device manager my device showed up under the Universal Serial Bus devices section as "STM32 STLINK" then I had to keep unistalling it until it did not show up under Universal Serial Bus deices.  Once it stop showing up, I was able to connect to it with the ST-LINK-Utility and use the st-link_cli command line to upload the firmware to the device again.  Here are the steps I took to unistall the USB driver for the st-link-v1 device:
+
+1) Open the Windows Device Manager window (Start button, right-click select Device Manager, click Device Manager).
+
+2) With the STM32VL Discovery board plugged in, under the Universal Serial Bus devices section it will be listed as "STM32 STLINK", right click on it and select unistall device, make sure you check the box next to "delete the driver". Click OK.
+
+3) Unplugg the USB cable from you computer that is connected to the STM32VLDiscovery board.  Wait 20 seconds, then plug the USB cable back into your computer.  Goto step 1 to check to see if the ST-link device came back and is listed under Universal Serial Bus devices section.  If it did come back then keep performing steps 1 - 2 until it does not return.  When it does not show up under Universal Serial Bus devices section, try running the Window's ST-LINK-Utility and see if you can connect to the device. I was able to.  I am hoping this is not just some fluck of luck but I am documenting this procedure for furture reference.
+
+4) to use Window's ST-LINK-Utilities command line interface in Platformio the command is as follows in the [env: section]:
+```
+upload_protocol         = custom
+upload_command          = st-link_cli -c ID=0 SWD -P $SOURCE 0x08000000
+```
+
+### From this point on if I am talking about the STM32VL discovery board, you can replace any of the board listed in the title for its name. I am trying to make all my examples run on all the different MCUs.
 
 ~Please obtain the STM32F10x Standard Peripheral Libray from: https://www.st.com/content/st_com/en/products/embedded-software/mcu-mpu-embedded-software/stm32-embedded-software/stm32-standard-peripheral-libraries/stsw-stm32054.html~
 
