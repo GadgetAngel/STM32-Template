@@ -1,7 +1,7 @@
 STM32-Template for Linux and Windows 10
 =======================================
 
-A Build template for projects using the **STM32VLDISCOVERY board, STM32F407 Discovery Board, and STM32F767 Nucleo-144 board**, using the arm embedded gnu toolchain, and the STM32F10x Standard Peripheral Library, STM32F40xx Standard Peripheral Library, CMSIS libraries, STM32F7 Standard Peripheral Library, and other. Trying to do things using "bare Metal" techniques but using the ST Libraries when I get stuck. This project is a learning project. I am trying to learn embedded programming using C Language and using the GNU toolchain. The "book.pdf" is where I am starting and expanding what I learn on the STM32F1 board to doing and learning by trial an error on the STM32F4 and STM32F4 MCUs.  This repository is a modified fork of https://github.com/geoffreymbrown/STM32-Template repository.
+A Build template for projects using the **STM32VLDISCOVERY board, STM32F407 Discovery Board, Nucleo STM32-L433RC-P board and Nucleo STM32F767 board**, using the arm embedded gnu toolchain, and the STM32F10x Standard Peripheral Library, STM32F40xx Standard Peripheral Library, CMSIS libraries, STM32F7 Standard Peripheral Library, and other. Trying to do things using "bare Metal" techniques but using the ST Libraries when I get stuck. This project is a learning project. I am trying to learn embedded programming using C Language and using the GNU toolchain. The "book.pdf" is where I am starting and expanding what I learn on the STM32F1 board to doing and learning by trial an error on the STM32F4 and STM32F4 MCUs.  This repository is a modified fork of https://github.com/geoffreymbrown/STM32-Template repository.
 
 Do not use the "book.pdf"'s method of installing codesourcery GNU Toolchain tools!! You should use the GNU Arm Embedded Toolchain tools. The below instructions will show you how to install the GNU Arm Embedded Toolchain:
 
@@ -29,7 +29,7 @@ upload_protocol         = custom
 upload_command          = st-link_cli -c ID=0 SWD -P $SOURCE 0x08000000
 ```
 
-### From this point on if I am talking about the STM32VL discovery board, you can replace any of the board listed in the title for its name. I am trying to make all my examples run on all the different MCUs.
+### From this point on if I am talking about the STM32VL discovery board, you can replace any of the boards listed in the title for its name. I am trying to make all my examples run on all the different MCUs.
 
 ~Please obtain the STM32F10x Standard Peripheral Libray from: https://www.st.com/content/st_com/en/products/embedded-software/mcu-mpu-embedded-software/stm32-embedded-software/stm32-standard-peripheral-libraries/stsw-stm32054.html~
 
