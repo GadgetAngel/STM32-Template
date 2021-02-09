@@ -193,7 +193,6 @@ SECTIONS
     libm.a ( * )
     libgcc.a ( * )
   }
-
 */
 
     /* Stabs debugging sections.  */

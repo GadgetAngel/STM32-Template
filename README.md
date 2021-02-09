@@ -1,10 +1,9 @@
 STM32-Template for Linux and Windows 10
 =======================================
 
-A Build template for projects using the **stm32vl discovery board**,
-using the arm embedded gnu toolchain, and the STM32F10x Standard Peripheral Library. See "book.pdf". This repository is a modified fork of https://github.com/geoffreymbrown/STM32-Template repository.
+A Build template for projects using the **STM32VLDISCOVERY board, STM32F407 Discovery Board, STM32L433 Nucleo-64 board and STM32F767 Nucleo-144 board**, using the arm embedded gnu toolchain, and the STM32F10x Standard Peripheral Library, STM32F40xx Standard Peripheral Library, CMSIS libraries, STM32F7 Standard Peripheral Library, and other. Trying to do things using "bare Metal" techniques but using the ST Libraries when I get stuck. This project is a learning project. I am trying to learn embedded programming using C Language and using the GNU toolchain. The "book.pdf" is where I am starting and expanding what I learn on the STM32F1 board to doing and learning by trial an error on the STM32F4 and STM32F4 MCUs.  This repository is a modified fork of https://github.com/geoffreymbrown/STM32-Template repository.
 
-Do not use the "book.pdf"'s method of installing codesourcery GNU Toolchain tools!! You should now use the GNU Arm Embedded Toolchain tools. The below instructions will show you how to install the GNU Arm Embedded Toolchain:
+Do not use the "book.pdf"'s method of installing codesourcery GNU Toolchain tools!! You should use the GNU Arm Embedded Toolchain tools. The below instructions will show you how to install the GNU Arm Embedded Toolchain:
 
 **For Windows 10**: use the Windows 10 installer (gcc-arm-none-eabi-10-2020-q4-major-win32.exe, select default but placd a check mark next to update system path variables) : https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads
 
@@ -15,6 +14,8 @@ https://www.st.com/en/evaluation-tools/stm32vldiscovery.html#sample-buy from oth
 
 Documentation for the STM32VLDISCOVERY board can be found: https://www.st.com/en/evaluation-tools/stm32vldiscovery.html#documentation
 The STM32VLDISCOVERY board has an STM32F100RBT6B MCU, here is it's datasheet : https://www.st.com/resource/en/datasheet/stm32f100cb.pdf
+
+### Please be aware that the STM32VLDISCOVERY board's ST-LINK-V1 does not work with the Window's ST-LINK-V2 Utility.  At this time the only tool that I can use to upload and download firmware to the STM32VL-Discovery board is the st-link utility on github.com and even that does not work in the latestest version. You must use the st-link utility V1.6.0 (https://github.com/stlink-org/stlink/tree/v1.6.0), with VScode and Platformio if you want to automatically upload your code to the board or debug your code on the board using VScode and the onboard st-link probe. The other discovery or Nucleo boards have st-link-v2 on board so they work with the Window's ST-LINK-UTILITY-V2.  From this point on if I am talking about the STM32VL discovery board, you can replace any of the board listed in the title for its name. I am trying to make all my examples run on all the different MCUs.
 
 ~Please obtain the STM32F10x Standard Peripheral Libray from: https://www.st.com/content/st_com/en/products/embedded-software/mcu-mpu-embedded-software/stm32-embedded-software/stm32-standard-peripheral-libraries/stsw-stm32054.html~
 
@@ -30,9 +31,11 @@ Now, (by hand), **Adjust the following items in the platformio.ini file:**:
 
 1) under [platformio] section: uncomment the project you want to build by uncommenting the correct "build_dir =xxx". There are the following project build directores: Demo_Build, BlinkingLight_Build, Blinking_Light2_Build, Blinking_Light3_Build, Button_Light_Build.
 
-2) under [plagformio] section: only uncomment **ONE** "build_dir=" at a time.
+2) under [platformio] section: only uncomment **ONE** "build_dir=" at a time.
 
-3) under [common] section: under the "default_src_filter  =", change the project's default_src_filter definition by changing the "-" sign to a "+" sign (before the <project name>) for the project you want to build. There are the following projects included in this repository: <Demo>, <BlinkingLight>, <Blinking_Light2>, <Blinking_Light3>, <Button_Light>.
+3) under [platformio] section select which board will be the default environment and set default_env= to its name
+
+4) under [common] section: under the "default_src_filter  =", change the project's default_src_filter definition by changing the "-" sign to a "+" sign (before the <project name>) for the project you want to build. There are the following projects included in this repository: <Demo>, <BlinkingLight>, <Blinking_Light2>, <Blinking_Light3>, <Button_Light>.
 
 The following projects need the additional source files enabled (change -<> to +<>) in the "default_src_filter =":
   1) Blinking_Light2 needs stm32f10x_rcc.c and stm32f10x_gpio.c
@@ -47,7 +50,7 @@ Leave the other default_src_filter definitions alone.
 
    (2) open this project up in VScode (open the folder STM32-TEMPLATE)
 
-   (3) build project using platfomio and VScode, by selecting the Build button (check mark) or Upload button (->)
+   (3) build project using platfomio and VScode, by selecting the Build button (check mark) or Upload button (->) or use the Debugger built into VScode to do visual debugging or you can do it the hard way with gdb server and two command windows.  VScode will start the gdb server for you automatically and allow you to set break points by using a mouse instead of a command line interface.
 
 
 #### To create new projects
@@ -474,3 +477,71 @@ Breakpoint 1, assert_failed (
 Instead of having to open up two command windows or terminal windows, you can use GDB via openocd in platformio.  Platformio will download the necessary tools as part of the platform ststm32.  All you have to do to start debugging is know what commands to execute and that is why I had you do it the manual way first so you would learn the GDB commands.
 
 After you compile your project, in VScode window, select Run menu and select "Start Debugging", inthe left-side panel where you see the Platformio extension, you should see a "bug on top of a Triangle" sysmbol, press this symbol. the Left side now switches to the Debug panel. At the top of the panel you should see a Green triangle and the words "PIO Debug". Press the green triangle to start the debug session. The PIO debug will break at the start of the main.c routine. The DEBUG CONSOLE (terminal window) should now be available for you to enter in commands. Type "q" when you want to quit running in Debug mode.
+
+### If you use VScode to debug be aware of a bug that occurs upon launching the debugger: you will have to go into the file called launch.json located in the .vscode directory of your project. This launch.json file is automatically generated. Before hitting the green triangle to start a dubugging session edit the launch.json file to remove the appended default environment name onto the end of "PlatformIO". This is what it looks like before I edit it:
+```
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "platformio-debug",
+            "request": "launch",
+            "name": "PIO Debug",
+            "executable": "c:/Firmware/Git_Repo/STM32_Template/f100rb_GPIOToggle_Build/disco_f100rb/firmware.elf",
+            "projectEnvName": "disco_f100rb",
+            "toolchainBinDir": "C:/Users/joann/.platformio/packages/toolchain-gccarmnoneeabi@1.70201.0/bin",
+            "svdPath": "C:/Users/joann/.platformio/platforms/ststm32/misc/svd/STM32F100xx.svd",
+            "preLaunchTask": {
+                "type": "PlatformIO",
+                "task": "Pre-Debug (disco_f100rb)"
+            },
+            "internalConsoleOptions": "openOnSessionStart"
+        },
+        {
+            "type": "platformio-debug",
+            "request": "launch",
+            "name": "PIO Debug (skip Pre-Debug)",
+            "executable": "c:/Firmware/Git_Repo/STM32_Template/f100rb_GPIOToggle_Build/disco_f100rb/firmware.elf",
+            "projectEnvName": "disco_f100rb",
+            "toolchainBinDir": "C:/Users/joann/.platformio/packages/toolchain-gccarmnoneeabi@1.70201.0/bin",
+            "svdPath": "C:/Users/joann/.platformio/platforms/ststm32/misc/svd/STM32F100xx.svd",
+            "internalConsoleOptions": "openOnSessionStart"
+        }
+    ]
+}
+```
+
+Now I edit it to look like so:
+```
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "platformio-debug",
+            "request": "launch",
+            "name": "PIO Debug",
+            "executable": "c:/Firmware/Git_Repo/STM32_Template/f100rb_GPIOToggle_Build/disco_f100rb/firmware.elf",
+            "projectEnvName": "disco_f100rb",
+            "toolchainBinDir": "C:/Users/joann/.platformio/packages/toolchain-gccarmnoneeabi@1.70201.0/bin",
+            "svdPath": "C:/Users/joann/.platformio/platforms/ststm32/misc/svd/STM32F100xx.svd",
+            "preLaunchTask": {
+                "type": "PlatformIO",
+                "task": "Pre-Debug"
+            },
+            "internalConsoleOptions": "openOnSessionStart"
+        },
+        {
+            "type": "platformio-debug",
+            "request": "launch",
+            "name": "PIO Debug (skip Pre-Debug)",
+            "executable": "c:/Firmware/Git_Repo/STM32_Template/f100rb_GPIOToggle_Build/disco_f100rb/firmware.elf",
+            "projectEnvName": "disco_f100rb",
+            "toolchainBinDir": "C:/Users/joann/.platformio/packages/toolchain-gccarmnoneeabi@1.70201.0/bin",
+            "svdPath": "C:/Users/joann/.platformio/platforms/ststm32/misc/svd/STM32F100xx.svd",
+            "internalConsoleOptions": "openOnSessionStart"
+        }
+    ]
+}
+```
+
+I removed the "disco_f100rb" from this line `"task": "Pre-Debug"`.  These extra characters ends up giving the task the wrong name and you get "Could not find the specified task" error.

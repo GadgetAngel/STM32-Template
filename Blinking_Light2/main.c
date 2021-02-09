@@ -12,7 +12,7 @@
 //for testing purposes
 static __IO int ledval = 0;
 static __IO int inc_const = 3;
-static __IO int button;
+static __IO uint8_t button;
 static __IO int number_limit = 4000;
 
 // Timer code gloabl variables
@@ -46,7 +46,7 @@ This occurs because of driver error:
 
 Wisdom on the internet has it that this happens if you reconfigure
 the SWD pins such that they no longer work
-for the debug interface. If I’m not mistaken, they are all on port A. SWDIO is PA13, SWCLK is PA14
+for the debug interface. If I’m not mistaken, they are all on port A. SWDIO is PA13, SWCLK is PA14 for both the STM32F1 and STM32F4
 */
 
 /*!< At this stage the microcontroller clock setting is already configured,
@@ -168,6 +168,7 @@ for the debug interface. If I’m not mistaken, they are all on port A. SWDIO is
     }
 
     if ((ledval & 4) && button) {
+      // button is equal to 1 if the button is NOT pressed
       #if defined(STM32_F100RB)
         // LED on PC9 and USER button on PA0; (button circuit is active low)
         // turn off light
@@ -179,6 +180,7 @@ for the debug interface. If I’m not mistaken, they are all on port A. SWDIO is
       #endif
     }
     else {
+      //button is equal to 0 when the button is pressed
       #if defined(STM32_F100RB)
         // LED on PC9 and USER button on PA0; (button circuit is active low)
         //turn on light
