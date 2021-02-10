@@ -109,12 +109,12 @@ Error: open failed
 ```
 FOR **WINDOWS** USERE ONLY: to prevent the above libusb_open() error from occuring, some web sites will inform you to download the Ziag tool (from here: https://zadig.akeo.ie/) and use it to fix the issue. ### PLEASE DO NOT DO THIS #### This might solve the problem temporaily. If you do this you will have to use the stlink V1.6.0 utility from github on your WINDOWs 10 computer system.
 
-On a **LINUX** system you will use the github project stlink (v1.6.0) to perform this task from a terminal window:
+On a **LINUX** system you will use the github project stlink (v1.6.0) to perform the task of flashing your fimware.bin file to the target MCU from a terminal window:
 ```
 $> st-flash write /your-path-to-file/firmware.bin 0x08000000
 ```
 
-On a **Windows** system you will use the ST-LINK-UTILITY's command line interface command ("st-link_cli") to perform this task from a terminal window:
+On a **Windows** system you will use the ST-LINK-UTILITY's command line interface command ("st-link_cli") to perform the task of flashing your firmware.bin file to the target MCU from a terminal window:
 ```
 $>st-link_cli -c ID=0 SWD -P "C:\path-to-compiled-firmware\Demo_Build\disco_f100rb\firmware.bin" 0x08000000
 ```
