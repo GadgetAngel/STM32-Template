@@ -36,6 +36,7 @@ The STM32VLDISCOVERY board has an STM32F100RBT6B MCU, here is it's datasheet : h
 ```
 
 ```
+[env: section_name]
 upload_protocol         = custom
 upload_command          = st-link_cli -c ID=0 SWD -P $SOURCE 0x08000000
 ```
