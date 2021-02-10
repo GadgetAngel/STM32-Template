@@ -676,4 +676,4 @@ After you compile your project, in VScode (with Platformio extension) window, se
 }
 ```
 
-I removed the "disco_f100rb" from this line `"task": "Pre-Debug"`.  These extra characters ends up giving the task the wrong name and you get "Could not find the specified task" error.
+I removed the "disco_f100rb" from this line `"task": "Pre-Debug"`.  These extra characters ends up giving the task the wrong name and you get **"Could not find the specified task" error**.
