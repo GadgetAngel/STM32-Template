@@ -164,6 +164,9 @@ int main(void)
 
     /* Reset PD12 and PD15 */
     GPIOD->BSRRH = LED1_PIN | LED2_PIN;
+
+    //break point for testing purposes
+    asm("nop");
   }
 } //end of main
 
