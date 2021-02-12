@@ -27,16 +27,22 @@
 //global variables
 //for testing purposes
 static __IO int ledval = 0;
-static __IO int inc_const = 3;
+#if defined(STM32_F100RB) || defined(STM32_F407VG)
+  static __IO int inc_const = 3;
+#elif defined(STM32L433xx)
+  static __IO int inc_const = 1;
+#endif
 static __IO uint8_t button;
 static __IO int number_limit = 4000;
 
 // Timer code gloabl variables
 static __IO uint32_t TimingDelay;
 
-static void SystemClock_80MHz(void);
-static void SystemClock_24MHz(void);
-static void Error_Handler(void);
+#if defined(STM32L433xx)
+  static void SystemClock_80MHz(void);
+  static void SystemClock_24MHz(void);
+  static void Error_Handler(void);
+#endif
 
 void Delay(uint32_t nTime);
 
@@ -47,23 +53,25 @@ void inc(void) {
     ledval = 0;
 }
 
-/* Default 0x1FE for 0x200 alignement. Best result with 0x200 ie alignement 0x202*/
-#if defined(__CC_ARM)
-  #pragma arm section code = ".ROM_While1_section"
-  #pragma no_inline
-  void whileloop1(void)
-#elif defined(__ICCARM__)
-  #pragma section="ROM_While1_region"
-  void whileloop1(void) @ "While1Section";
-  void whileloop1(void)
-#elif defined(__GNUC__)
-  void __attribute__((section(".ROM_While1_section"), noinline)) whileloop1(void)
+#if defined(STM32L433xx)
+  /* Default 0x1FE for 0x200 alignement. Best result with 0x200 ie alignement 0x202*/
+  #if defined(__CC_ARM)
+    #pragma arm section code = ".ROM_While1_section"
+    #pragma no_inline
+    void whileloop1(void)
+  #elif defined(__ICCARM__)
+    #pragma section="ROM_While1_region"
+    void whileloop1(void) @ "While1Section";
+    void whileloop1(void)
+  #elif defined(__GNUC__)
+    void __attribute__((section(".ROM_While1_section"), noinline)) whileloop1(void)
 #endif
   {
     while(1);
   }
 #if defined(__CC_ARM)
   #pragma arm section code
+#endif
 #endif
 
 int main(void) {
@@ -240,6 +248,30 @@ for the debug interface. If I’m not mistaken, they are all on port A. SWDIO is
 
   #endif
 
+  #if defined(STM32_F100RB) || defined(STM32_F407VG)
+  // Start off at a known state
+  //turn one light on
+  //turn other light off
+    #if defined(STM32_F100RB)
+      // LED on PC9 and USER button on PA0; (button circuit is active low)
+      // turn on light
+      GPIO_WriteBit(GPIOC , GPIO_Pin_9 , Bit_SET);
+    #elif defined(STM32_F407VG)
+      // Green LED is a user LED connected to the PD12
+      // turn on light
+      GPIO_WriteBit(GPIOD , GPIO_Pin_12 , Bit_SET);
+    #endif
+    #if defined(STM32_F100RB)
+      //LED on PC8
+      //turn off light
+      GPIO_WriteBit(GPIOC , GPIO_Pin_8 , Bit_RESET);
+    #elif defined(STM32_F407VG)
+      //blue LED is a user LED connected to PD15
+      //turn off light
+      GPIO_WriteBit(GPIOD , GPIO_Pin_15 , Bit_RESET);
+    #endif
+  #endif
+
   //main loop that toggles the leds and reads the USER 1 button
   while (1) {
 
@@ -284,11 +316,11 @@ for the debug interface. If I’m not mistaken, they are all on port A. SWDIO is
       asm("nop");
     #endif
 
-    #if defined(STM32_F100RB) || defined(STM32_F407VG)
+    //#if defined(STM32_F100RB) || defined(STM32_F407VG)
       if ((ledval & 4) && button) {
-    #elif defined(STM32L433xx)
-      if (button) {
-    #endif
+    //#elif defined(STM32L433xx)
+      //if (button) {
+    //#endif
         // button is equal to 1 if the button is NOT pressed
         #if defined(STM32_F100RB)
           // LED on PC9 and USER button on PA0; (button circuit is active low)
